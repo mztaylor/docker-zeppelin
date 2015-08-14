@@ -1,13 +1,20 @@
-FROM debian:jessie
-MAINTAINER Dylan Meissner "https://github.com/dylanmei"
+FROM dockerfile/ubuntu
+MAINTAINER mztaylor "https://github.com/mztaylor" 
+
+
+
 
 RUN apt-get update \
-  && apt-get install -y curl net-tools build-essential git wget unzip python python-setuptools python-dev python-numpy \
+  && apt-get install -y openjdk-7-jdk curl net-tools build-essential git wget unzip python python-setuptools python-dev python-numpy \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-# JAVA
-ENV JAVA_HOME /usr/jdk1.8.0_31
+
+# Define commonly used JAVA_HOME variable
+ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
+WORKDIR /data
+
+
 ENV PATH $PATH:$JAVA_HOME/bin
 RUN curl -sL --retry 3 --insecure \
   --header "Cookie: oraclelicense=accept-securebackup-cookie;" \
@@ -19,7 +26,7 @@ RUN curl -sL --retry 3 --insecure \
 RUN easy_install py4j
 
 # MAVEN
-ENV MAVEN_VERSION 3.3.1
+ENV MAVEN_VERSION 3.3.3
 ENV MAVEN_HOME /usr/apache-maven-$MAVEN_VERSION
 ENV PATH $PATH:$MAVEN_HOME/bin
 RUN curl -sL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz \
