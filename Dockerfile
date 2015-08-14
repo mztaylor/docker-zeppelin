@@ -1,9 +1,6 @@
 FROM dockerfile/ubuntu
 MAINTAINER mztaylor "https://github.com/mztaylor" 
 
-
-
-
 RUN apt-get update \
   && apt-get install -y openjdk-7-jdk curl net-tools build-essential git wget unzip python python-setuptools python-dev python-numpy \
   && apt-get clean \
